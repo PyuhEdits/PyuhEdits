@@ -6,21 +6,17 @@
     font-family: 'Arial', sans-serif;
 }
 
-html, body {
-    height: 100%; /* Penting agar margin-top: auto pada footer bekerja */
-}
-
 body {
     display: flex;
     flex-direction: column;
     background-color: #121212;
     color: #ffffff;
-    min-height: 100vh;
+    min-height: 100vh; /* Memastikan body minimal setinggi layar */
 }
 
-/* --- LAYOUT CONTAINER --- */
+/* --- WRAPPER UTAMA --- */
 .container {
-    flex: 1 0 auto; /* Memastikan konten utama mengambil ruang yang tersedia */
+    flex: 1 0 auto; /* Ini akan mendorong footer ke bawah */
     width: 100%;
 }
 
@@ -50,13 +46,12 @@ body {
 
 .profile-container {
     position: absolute;
-    bottom: -75px; /* Menggunakan bottom agar relatif terhadap background */
+    bottom: -75px; /* Profil menggantung di bawah background */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
     z-index: 2;
 }
 
@@ -70,72 +65,27 @@ body {
 }
 
 .info {
-    margin: 90px auto 30px; /* Memberi ruang setelah profile-container yang melayang */
+    margin: 90px auto 30px; /* Jarak setelah profil yang melayang */
     text-align: center;
     max-width: 80%;
 }
 
-.bio {
-    font-size: 14px;
-    color: #b3b3b3;
-    max-width: 500px;
-    margin: 10px auto 15px;
-}
-
-/* --- VIDEO FEED SECTION --- */
+/* --- KONTEN UTAMA (VIDEO FEED) --- */
 .body {
     width: 100%;
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-    /* Tidak menggunakan flex: 1 di sini agar tidak konflik dengan container utama */
 }
 
 #youtube-feed {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
-    padding-bottom: 40px; /* Ruang napas sebelum pagination/footer */
+    padding-bottom: 50px; /* Ruang napas sebelum footer */
 }
 
-/* --- VIDEO CARD STYLES --- */
-.video-card {
-    background: #1e1e1e;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid #333;
-    transition: all 0.3s ease;
-}
-
-.video-card:hover {
-    transform: translateY(-5px);
-    border-color: #00ffcc;
-}
-
-.video-thumbnail {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%; /* 16:9 Ratio */
-    cursor: pointer;
-}
-
-.video-thumbnail img {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover;
-}
-
-.video-duration {
-    position: absolute;
-    bottom: 8px; right: 8px;
-    background: rgba(0,0,0,0.8);
-    color: white;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 12px;
-}
-
-/* --- PRICE LIST SECTION --- */
+/* --- HARGA (PRICE LIST) --- */
 .price-section {
     background-color: #0a0a0a;
     padding: 60px 20px;
@@ -146,80 +96,44 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
-    max-width: 1000px;
-    margin: 0 auto;
 }
 
-.priceList .card {
-    background: #1e1e1e;
-    border: 1px solid #333;
-    border-radius: 10px;
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-}
-
-/* --- FOOTER (FIXED HEIGHT ISSUE) --- */
+/* --- FOOTER (PERBAIKAN TINGGI) --- */
 .footer {
-    flex-shrink: 0; /* Mencegah footer menciut */
+    flex-shrink: 0; /* Mencegah footer menciut atau terpotong */
     text-align: center;
     padding: 40px 20px;
     background-color: #0a0a0a;
     color: #b3b3b3;
+    font-size: 14px;
     border-top: 1px solid #222;
     width: 100%;
 }
 
-/* --- MODAL / CAUTION --- */
+/* --- MODAL ORDER (CAUTION) --- */
 .hidden-info {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.9);
     z-index: 999;
-    display: none; /* Diatur via JS */
+    display: none; /* Muncul via JS */
     align-items: center;
     justify-content: center;
 }
 
 .caution {
     background: #1e1e1e;
-    padding: 35px;
+    padding: 30px;
     border-radius: 15px;
     max-width: 480px;
     width: 90%;
     border: 1px solid #333;
 }
 
-/* --- BUTTONS & INTERACTION --- */
-.send-order {
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 10px;
-    transition: 0.3s;
-}
-
-.page-btn {
-    background: #2a2a2a;
-    color: white;
-    border: 1px solid #444;
-    padding: 8px 16px;
-    margin: 0 5px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.page-btn.active {
-    background: #00ffcc;
-    color: #121212;
-}
-
-/* --- RESPONSIVE --- */
+/* --- RESPONSIF HP --- */
 @media (max-width: 768px) {
     .background { height: 250px; }
-    .profile-container { top: 180px; }
-    .info { margin-top: 120px; }
+    .profile-container { bottom: -60px; }
+    .info { margin-top: 70px; }
     #youtube-feed { grid-template-columns: 1fr; }
 }
