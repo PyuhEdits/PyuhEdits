@@ -1,0 +1,73 @@
+.hidden-info {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Disesuaikan agar latar belakang blur lebih gelap */
+    backdrop-filter: blur(3px);
+    position: fixed;
+    z-index: 100; /* Z-index dinaikkan agar selalu paling atas */
+}
+
+/* === CATATAN PENTING ===
+   Semua kode .caution, .caution ul, dan .order TELAH DIHAPUS dari sini.
+   Pengaturannya sekarang terpusat sepenuhnya di file style.css 
+   agar tidak terjadi bentrokan warna (Dark Mode).
+*/
+
+.thanks {
+    gap: 10px;
+    margin: 10px;
+}
+
+/* Tombol Camera Float (Meskipun sudah tidak dipakai di index, dibiarkan jika sewaktu-waktu butuh) */
+.camera-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 100;
+}
+  
+.camera-icon {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    color: #222;
+    text-decoration: none;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+  
+.camera-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+    color: #0066ff;
+}
+  
+.camera-icon svg {
+    flex-shrink: 0;
+    transition: transform 0.4s ease;
+}
+  
+.camera-icon:hover svg {
+    transform: scale(1.15);
+}
+  
+.camera-tooltip {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+  
+.camera-icon:hover .camera-tooltip {
+    opacity: 1;
+    max-width: 200px;
+    padding-right: 4px;
+}

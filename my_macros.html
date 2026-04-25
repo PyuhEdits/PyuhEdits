@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar File Minimalis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Light background */
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Center content vertically */
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        /* Mengatur ukuran gambar placeholder agar konsisten */
+        .file-icon {
+            flex-shrink: 0; /* Mencegah gambar menyusut */
+            width: 48px; /* Ukuran tetap untuk ikon */
+            height: 48px;
+            object-fit: contain; /* Memastikan gambar pas tanpa terpotong */
+            border-radius: 0.25rem; /* Sedikit pembulatan */
+        }
+        /* Styling untuk modal (pop-up) */
+        .modal {
+            display: none; /* Sembunyikan modal secara default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.3); /* Slightly lighter overlay */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.75rem; /* Slightly less rounded */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Softer shadow */
+            max-width: 90%;
+            width: 380px; /* Slightly narrower */
+            text-align: center;
+            position: relative;
+        }
+        .close-button {
+            position: absolute;
+            top: 0.75rem; /* Closer to top */
+            right: 1.25rem; /* Closer to right */
+            font-size: 1.75rem; /* Slightly smaller */
+            font-weight: normal; /* Less bold */
+            color: #94a3b8; /* Softer gray */
+            cursor: pointer;
+            line-height: 1; /* Align vertically */
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #475569; /* Darker on hover */
+        }
+        /* Styling untuk tombol yang dinonaktifkan */
+        .btn-disabled {
+            opacity: 0.5; /* More subtle disabled state */
+            cursor: not-allowed;
+        }
+        /* General button styling for minimalist look */
+        .btn-minimal {
+            border: 1px solid #e2e8f0; /* Light border */
+            background-color: #ffffff;
+            color: #334155; /* Darker text */
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-minimal:hover:not(:disabled) {
+            background-color: #f1f5f9; /* Light hover */
+            border-color: #cbd5e1;
+        }
+        .btn-primary {
+            background-color: #3b82f6; /* Blue for primary actions */
+            color: #ffffff;
+        }
+        .btn-primary:hover:not(:disabled) {
+            background-color: #2563eb;
+        }
+        .btn-secondary {
+            background-color: #8b5cf6; /* Purple for social media */
+            color: #ffffff;
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #7c3aed;
+        }
+    </style>
+</head>
+<body class="p-4">
+
+    <div class="container mx-auto p-6 bg-white shadow-lg rounded-xl max-w-2xl relative">
+        <button onclick="goToHomePage()"
+                class="absolute top-4 left-4 p-2 rounded-full text-gray-700 hover:text-gray-900 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 group relative">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" 
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max px-2 py-1 bg-gray-700 text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                Kembali ke Home
+            </span>
+        </button>
+
+        <h1 class="text-2xl font-semibold text-gray-800 mb-2 text-center"><b>Davinci resolve Vfx</b></h1>
+        <p class="text-sm text-gray-500 mb-6 text-center">
+                Kumpulan macro yang admin bikin
+        </p>
+
+        <div id="file-list" class="flex flex-col space-y-4">
+            </div>
+    </div>
+
+    <div id="downloadConfirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2 class="text-xl font-semibold text-gray-800 mb-3" id="modalTitle">Konfirmasi Unduhan</h2>
+            <p class="text-gray-600 mb-5 text-sm" id="modalText">
+                Untuk mengunduh <span class="font-medium" id="fileNameInModal"></span>,
+                silakan ikuti saya di media sosial terlebih dahulu.
+            </p>
+            <div class="flex flex-col space-y-3">
+                <button onclick="goToSocialMediaAndEnableDownload('https://www.instagram.com/its_zenkai')"
+                        class="btn-secondary py-2.5 px-5 rounded-lg shadow-sm font-medium flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        </svg>
+                    Follow untuk Unduh
+                </button>
+
+                <button id="confirmDownloadButton" disabled
+                        class="bg-blue-400 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out btn-disabled">
+                    Unduh File Ini
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data file yang akan ditampilkan
+        const files = [
+            { name: 'Bounce v1.zip', type: 'Zip', size: '2.5 MB', imageUrl: 'https://placehold.co/48x48/A78BFA/FFFFFF?text=Zip', downloadUrl: 'fold/bounce_v1.zip' },
+           ];
+
+        let currentFileToDownload = null; // Variabel untuk menyimpan detail file yang akan diunduh
+
+        /**
+         * Fungsi untuk mengunduh file dari URL yang diberikan.
+         * @param {string} filename - Nama file yang akan diunduh.
+         * @param {string} fileUrl - URL dari file yang akan diunduh.
+         */
+        function downloadFile(filename, fileUrl) {
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.download = filename; // Menetapkan nama file untuk unduhan
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            console.log(`Mengunduh: ${filename} dari ${fileUrl}`);
+        }
+
+        /**
+         * Fungsi untuk merender daftar file secara dinamis.
+         */
+        function renderFileList() {
+            const fileListContainer = document.getElementById('file-list');
+            fileListContainer.innerHTML = ''; // Bersihkan konten yang ada
+
+            files.forEach(file => {
+                const fileItem = document.createElement('div');
+                // Menggunakan flex-row untuk layout horizontal dan gap-4 untuk jarak antar elemen
+                fileItem.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg shadow-sm';
+                fileItem.innerHTML = `
+                    <div class="flex items-center space-x-4">
+                        <img src="${file.imageUrl}" alt="${file.name}" class="file-icon">
+                        <div>
+                            <p class="text-base font-medium text-gray-700">${file.name}</p>
+                            <p class="text-sm text-gray-500">${file.size} - ${file.type}</p>
+                        </div>
+                    </div>
+                    <button onclick="openDownloadConfirmationModal('${file.name}', '${file.downloadUrl}')"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1.5 px-4 rounded-md shadow-sm transition duration-300 ease-in-out text-sm">
+                        Unduh
+                    </button>
+                `;
+                fileListContainer.appendChild(fileItem);
+            });
+        }
+
+        /**
+         * Fungsi untuk membuka pop-up konfirmasi unduhan.
+         * @param {string} filename - Nama file yang akan diunduh.
+         * @param {string} fileUrl - URL dari file yang akan diunduh.
+         */
+        function openDownloadConfirmationModal(filename, fileUrl) {
+            currentFileToDownload = { name: filename, url: fileUrl }; // Simpan detail file
+            document.getElementById('fileNameInModal').textContent = filename; // Perbarui nama file di modal
+
+            const modal = document.getElementById('downloadConfirmationModal');
+            const confirmDownloadButton = document.getElementById('confirmDownloadButton');
+
+            // Set tombol unduh menjadi dinonaktifkan secara default saat modal dibuka
+            confirmDownloadButton.disabled = true;
+            confirmDownloadButton.classList.add('btn-disabled', 'bg-blue-400');
+            confirmDownloadButton.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+
+            modal.style.display = 'flex'; // Menampilkan modal
+        }
+
+        /**
+         * Fungsi untuk melakukan unduhan file.
+         * Dipanggil dari dalam modal setelah konfirmasi.
+         */
+        function performDownload() {
+            if (currentFileToDownload) {
+                const link = document.createElement('a');
+                link.href = currentFileToDownload.url;
+                link.download = currentFileToDownload.name; // Menetapkan nama file untuk unduhan
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                console.log(`Mengunduh: ${currentFileToDownload.name} dari ${currentFileToDownload.url}`);
+                closeModal(); // Tutup modal setelah unduhan dimulai
+            }
+        }
+
+        /**
+         * Fungsi untuk menutup pop-up.
+         */
+        function closeModal() {
+            const modal = document.getElementById('downloadConfirmationModal');
+            modal.style.display = 'none'; // Menyembunyikan modal
+            currentFileToDownload = null; // Reset variabel
+        }
+
+        /**
+         * Fungsi untuk menavigasi ke URL media sosial dan mengaktifkan tombol unduh.
+         * @param {string} url - URL media sosial yang akan dibuka.
+         */
+        function goToSocialMediaAndEnableDownload(url) {
+            window.open(url, '_blank'); // Membuka URL di tab baru
+
+            // Aktifkan tombol unduh setelah mengklik tombol "Follow untuk Unduh"
+            const confirmDownloadButton = document.getElementById('confirmDownloadButton');
+            confirmDownloadButton.disabled = false;
+            confirmDownloadButton.classList.remove('btn-disabled', 'bg-blue-400');
+            confirmDownloadButton.classList.add('bg-blue-600', 'hover:bg-blue-700');
+
+            // Opsional: Anda bisa menambahkan pesan di modal bahwa tombol unduh sudah aktif
+            document.getElementById('modalText').innerHTML = `
+                Terima kasih! Sekarang Anda bisa mengunduh <span class="font-semibold" id="fileNameInModal">${currentFileToDownload.name}</span>.
+            `;
+        }
+
+        /**
+         * Fungsi untuk menavigasi ke halaman utama atau halaman lain.
+         * Anda bisa mengganti URL ini dengan halaman tujuan Anda.
+         */
+        function goToHomePage() {
+            window.location.href = './index.html'; // Ganti dengan URL halaman tujuan Anda
+        }
+
+        // Event listener untuk tombol "Unduh File Ini" di dalam modal
+        document.getElementById('confirmDownloadButton').addEventListener('click', performDownload);
+
+        // Render daftar file saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFileList();
+        });
+    </script>
+</body>
+</html>
