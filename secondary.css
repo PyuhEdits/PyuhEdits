@@ -4,7 +4,6 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8); /* Disesuaikan agar latar belakang blur lebih gelap */
     backdrop-filter: blur(3px);
-    position: fixed;
     z-index: 100; /* Z-index dinaikkan agar selalu paling atas */
 }
 
