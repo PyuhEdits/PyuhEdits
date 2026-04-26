@@ -1421,11 +1421,17 @@ html {
 @media (max-width: 768px) {
     /* 1. Sesuaikan Tinggi Sampul & Posisi Profil */
     .background {
-        height: 250px; /* Diperkecil agar tidak memenuhi layar HP */
+        background-image: url('sampul_mobile.png') !important;
+        height: 380px; 
+        background-size: cover;
+        /* PAKSA UNTUK MENAMPILKAN BAGIAN ATAS GAMBAR */
+        background-position: top center !important; 
     }
 
     .profile-container {
-        top: 175px; /* Sesuaikan posisi foto profil agar tidak terlalu ke bawah */
+        /* Jika setelah diganti top center profil jadi terlalu menutupi teks, 
+           kamu bisa turunkan sedikit angka top di bawah ini (misal ke 320px) */
+        top: 300px; 
     }
 
     .profile {
